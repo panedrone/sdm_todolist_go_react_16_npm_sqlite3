@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  sdm-todo-app:
+    network_mode: "bridge"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sdm-todo-app
+    container_name:  sdm-todo-app
+    privileged: true
+    restart: always
+    ports:
+      - '3101:8080'
+    volumes:
+      - ./front-end:/apps/front-end
+      - ./db:/apps/db

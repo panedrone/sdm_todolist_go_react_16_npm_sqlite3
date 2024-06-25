@@ -6,8 +6,6 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	// "github.com/godror/godror"
-	// "github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/jmoiron/sqlx/reflectx"
 	"io"
@@ -18,15 +16,15 @@ import (
 )
 
 /*
-	This file is a part of SQL DAL Maker project: https://sqldalmaker.sourceforge.net
+	This file is a part of SQL DAL Maker Project: https://sqldalmaker.sourceforge.net
 	It demonstrates how to implement an interface DataStore in Go + sqlx.
-	More about DataStore: https://sqldalmaker.sourceforge.net/preconfiguring.html#ds
+	More about DataStore: https://sqldalmaker.sourceforge.net/preconfig.html#ds
 	Recent version: https://github.com/panedrone/sqldalmaker/blob/master/src/resources/data_store_sqlx.go
 
 	Copy-paste this code to your project and change it for your needs.
 	Improvements are welcome: sqldalmaker@gmail.com
 
-	Demo project: https://github.com/panedrone/sdm_demo_todolist_golang
+	Demo project: https://github.com/panedrone/sdm_todolist_go_react_16_npm_sqlite3
 */
 
 type DataStore interface {
@@ -96,9 +94,7 @@ func (ds *_DS) Db() *sqlx.DB {
 
 /*
 
-// 	Implement "func (ds *_DS) initDb()" in an external file. This is an example:
-//
-// 	https://github.com/panedrone/sqldalmaker/blob/master/src/resources/data_store_no_orm_ex.go
+// 	Implement "func (ds *_DS) initDb()" in an external file:
 
 package dbal
 
@@ -1286,37 +1282,34 @@ func _setBytes(d *[]byte, value interface{}) error {
 	return nil
 }
 
-//func SetNumber(d *godror.Number, row map[string]interface{}, colName string, errMap map[string]int) {
-//	value, err := _getValue(row, colName, errMap)
-//	if err == nil {
-//		err = _setNumber(d, value)
-//		updateErrMap(err, colName, errMap)
-//	}
-//}
-//
-//func _setNumber(d *godror.Number, value interface{}) error {
-//	err := d.Scan(value)
-// 	if err != nil {
-// 		return assignErr(d, value, "_setNumber", err.Error())
-// 	}
-//	return err
-//}
+func SetNum(d interface{}, row map[string]interface{}, colName string, errMap map[string]int) {
+	value, err := _getValue(row, colName, errMap)
+	if err == nil {
+		s, ok := d.(sql.Scanner)
+		if ok {
+			err = _scan(s, value)
+		} else {
+			err = _setAny(d, value)
+		}
+	}
+	updateErrMap(err, colName, errMap)
+}
 
-//func SetUUID(d *uuid.UUID, row map[string]interface{}, colName string, errMap map[string]int) {
-//	value, err := _getValue(row, colName, errMap)
-//	if err == nil {
-//		err = _setUUID(d, value)
-//		updateErrMap(err, colName, errMap)
-//	}
-//}
-//
-// func _setUUID(d *uuid.UUID, value interface{}) error {
-// 	err := d.Scan(value)
-// 	if err != nil {
-// 		return assignErr(d, value, "_setUUID", err.Error())
-// 	}
-// 	return nil
-// }
+func Scan(d sql.Scanner, row map[string]interface{}, colName string, errMap map[string]int) {
+	value, err := _getValue(row, colName, errMap)
+	if err == nil {
+		err = _scan(d, value)
+		updateErrMap(err, colName, errMap)
+	}
+}
+
+func _scan(d sql.Scanner, value interface{}) error {
+	err := d.Scan(value)
+	if err != nil {
+		return assignErr(d, value, "_scan", err.Error())
+	}
+	return nil
+}
 
 func _getValue(row map[string]interface{}, colName string, errMap map[string]int) (value interface{}, err error) {
 	var ok bool
@@ -1363,10 +1356,8 @@ func _setAny(dstPtr interface{}, value interface{}) error {
 		err = _setBool(d, value)
 	case *[]byte: // the same as uint8
 		err = _setBytes(d, value)
-	//case *godror.Number:
-	//	err = _setNumber(d, value)
-	//case *uuid.UUID:
-	//	err = _setUUID(d, value)
+	case sql.Scanner:
+		err = _scan(d, value)
 	//case *[]string:
 	//	switch bv := value.(type) {
 	//	case []byte:

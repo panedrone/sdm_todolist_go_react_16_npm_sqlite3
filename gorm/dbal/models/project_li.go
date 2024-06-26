@@ -5,7 +5,7 @@ package models
 
 // ProjectLi `project` list item: [+] p_tasks_count
 type ProjectLi struct {
-	PId         int64  `json:"p_id" gorm:"column:p_id;primaryKey;autoIncrement"`
+	PID         int64  `json:"p_id" gorm:"column:p_id;primaryKey;autoIncrement"`
 	PName       string `json:"p_name" gorm:"column:p_name;not null"`
 	PTasksCount int64  `json:"p_tasks_count" gorm:"column:p_tasks_count;not null"`
 }

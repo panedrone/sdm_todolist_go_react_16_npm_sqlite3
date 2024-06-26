@@ -5,7 +5,7 @@ package dto
 
 // TaskLi `task` list item: [-] p_id, [-] t_comments
 type TaskLi struct {
-	TId       int64  `json:"t_id" db:"t_id"`
+	TID       int64  `json:"t_id" db:"t_id"`
 	TPriority int64  `json:"t_priority" db:"t_priority"`
 	TDate     string `json:"t_date" db:"t_date"`
 	TSubject  string `json:"t_subject" db:"t_subject"`

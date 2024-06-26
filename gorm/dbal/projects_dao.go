@@ -28,9 +28,9 @@ func (dao *ProjectsDao) ReadProjectList(ctx context.Context) (res []*models.Proj
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pId int64) (*models.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*models.Project, error) {
 	res := &models.Project{}
-	err := dao.ds.Read(ctx, "projects", res, pId)
+	err := dao.ds.Read(ctx, "projects", res, pid)
 	if err == nil {
 		return res, nil
 	}
@@ -69,7 +69,7 @@ func (dao *ProjectsDao) GetProjectIds(ctx context.Context) (res []int64, err err
 	return
 }
 
-func (dao *ProjectsDao) GetProjectId(ctx context.Context) (res int64, err error) {
+func (dao *ProjectsDao) GetProjectID(ctx context.Context) (res int64, err error) {
 	sql := `select p.*, 
 		(select count(*) from tasks where p_id=p.p_id) as p_tasks_count 
 		from projects p 

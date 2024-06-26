@@ -19,22 +19,22 @@ func (dao *ProjectsDao) CreateProject(ctx context.Context, item *dto.Project) er
 	sql := `insert into projects (p_name) values (?)`
 	row, err := dao.ds.Insert(ctx, sql, "p_id", item.PName)
 	if err == nil {
-		err = SetRes(&item.PId, row)
+		err = SetRes(&item.PID, row)
 	}
 	return err
 }
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pId int64) (*dto.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*dto.Project, error) {
 	sql := `select * from projects where p_id=?`
-	row, err := dao.ds.QueryRow(ctx, sql, pId)
+	row, err := dao.ds.QueryRow(ctx, sql, pid)
 	if err != nil {
 		return nil, err
 	}
 	item := dto.Project{}
 	errMap := make(map[string]int)
-	SetInt64(&item.PId, row, "p_id", errMap)
+	SetInt64(&item.PID, row, "p_id", errMap)
 	SetString(&item.PName, row, "p_name", errMap)
 	err = ErrMapToErr(errMap)
 	return &item, err
@@ -44,7 +44,7 @@ func (dao *ProjectsDao) ReadProject(ctx context.Context, pId int64) (*dto.Projec
 
 func (dao *ProjectsDao) UpdateProject(ctx context.Context, item *dto.Project) (rowsAffected int64, err error) {
 	sql := `update projects set p_name=? where p_id=?`
-	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PName, item.PId)
+	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PName, item.PID)
 	return
 }
 
@@ -52,7 +52,7 @@ func (dao *ProjectsDao) UpdateProject(ctx context.Context, item *dto.Project) (r
 
 func (dao *ProjectsDao) DeleteProject(ctx context.Context, item *dto.Project) (rowsAffected int64, err error) {
 	sql := `delete from projects where p_id=?`
-	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PId)
+	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PID)
 	return
 }
 
@@ -64,7 +64,7 @@ func (dao *ProjectsDao) ReadAll(ctx context.Context) (res []*dto.ProjectLi, err 
 	errMap := make(map[string]int)
 	_onRow := func(row map[string]interface{}) {
 		item := dto.ProjectLi{}
-		SetInt64(&item.PId, row, "p_id", errMap)
+		SetInt64(&item.PID, row, "p_id", errMap)
 		SetString(&item.PName, row, "p_name", errMap)
 		SetInt64(&item.PTasksCount, row, "p_tasks_count", errMap)
 		res = append(res, &item)
@@ -85,7 +85,7 @@ func (dao *ProjectsDao) GetProjectIds(ctx context.Context) (res []int64, err err
 	return
 }
 
-func (dao *ProjectsDao) GetProjectId(ctx context.Context) (res []int64, err error) {
+func (dao *ProjectsDao) GetProjectID(ctx context.Context) (res []int64, err error) {
 	sql := `select p.*, 
 		(select count(*) from tasks where p_id=p.p_id) as p_tasks_count 
 		from projects p 
@@ -94,26 +94,26 @@ func (dao *ProjectsDao) GetProjectId(ctx context.Context) (res []int64, err erro
 	return
 }
 
-func (dao *ProjectsDao) PId(ctx context.Context) (res int64, err error) {
+func (dao *ProjectsDao) PID(ctx context.Context) (res int64, err error) {
 	sql := `select * from projects`
 	err = dao.ds.Query(ctx, sql, &res)
 	return
 }
 
-func (dao *ProjectsDao) ProjectId(ctx context.Context, pId string) (res int64, err error) {
+func (dao *ProjectsDao) ProjectID(ctx context.Context, pID string) (res int64, err error) {
 	sql := `select * from projects where p_id=?`
-	err = dao.ds.Query(ctx, sql, &res, pId)
+	err = dao.ds.Query(ctx, sql, &res, pID)
 	return
 }
 
-func (dao *ProjectsDao) GetPIds(ctx context.Context, pId int64) (res []int64, err error) {
+func (dao *ProjectsDao) GetPIds(ctx context.Context, pID int64) (res []int64, err error) {
 	sql := `select * from projects where p_id=?`
-	err = dao.ds.QueryAll(ctx, sql, &res, pId)
+	err = dao.ds.QueryAll(ctx, sql, &res, pID)
 	return
 }
 
-func (dao *ProjectsDao) GetPId(ctx context.Context, pId int64) (res int64, err error) {
+func (dao *ProjectsDao) GetPID(ctx context.Context, pID int64) (res int64, err error) {
 	sql := `select * from projects where p_id=?`
-	err = dao.ds.Query(ctx, sql, &res, pId)
+	err = dao.ds.Query(ctx, sql, &res, pID)
 	return
 }

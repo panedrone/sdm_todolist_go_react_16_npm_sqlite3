@@ -48,7 +48,7 @@ func (h *taskHandlers) TaskCreate(ctx *gin.Context) {
 		return
 	}
 	t := dto.Task{}
-	t.PId = uri.PId
+	t.PID = uri.PId
 	t.TSubject = inTask.TSubject
 	t.TPriority = 1
 	t.TDate = datetime.NowLocalString()
@@ -158,8 +158,8 @@ func (h *taskHandlers) TaskUpdate(ctx *gin.Context) {
 		})
 		return
 	}
-	t.TId = uri.TId
-	t.PId = req.PId
+	t.TID = uri.TId
+	t.PID = req.PID
 	t.TSubject = req.TSubject
 	t.TPriority = req.TPriority
 	t.TDate = req.TDate
@@ -186,7 +186,7 @@ func (h *taskHandlers) TaskDelete(ctx *gin.Context) {
 	if err != nil {
 		return
 	}
-	t := dto.Task{TId: uri.TId}
+	t := dto.Task{TID: uri.TId}
 	if _, err := h.dao.DeleteTask(ctx, &t); err != nil {
 		resp.Abort500(ctx, err)
 		return

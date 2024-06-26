@@ -28,9 +28,9 @@ func (dao *TasksDao) ReadTaskList(ctx context.Context) (res []*models.Task, err 
 
 // C(R)UD: tasks
 
-func (dao *TasksDao) ReadTask(ctx context.Context, tId int64) (*models.Task, error) {
+func (dao *TasksDao) ReadTask(ctx context.Context, tid int64) (*models.Task, error) {
 	res := &models.Task{}
-	err := dao.ds.Read(ctx, "tasks", res, tId)
+	err := dao.ds.Read(ctx, "tasks", res, tid)
 	if err == nil {
 		return res, nil
 	}
@@ -51,9 +51,9 @@ func (dao *TasksDao) DeleteTask(ctx context.Context, item *models.Task) (rowsAff
 	return
 }
 
-func (dao *TasksDao) RawProjectTasks(ctx context.Context, pId int64) (res []*models.TaskLi, err error) {
+func (dao *TasksDao) RawProjectTasks(ctx context.Context, pID int64) (res []*models.TaskLi, err error) {
 	sql := `select t_id, t_priority, t_date, t_subject from tasks where p_id =? 
 		order by t_id`
-	err = dao.ds.Select(ctx, sql, &res, pId)
+	err = dao.ds.Select(ctx, sql, &res, pID)
 	return
 }

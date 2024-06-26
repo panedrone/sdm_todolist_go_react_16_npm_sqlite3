@@ -4,6 +4,6 @@ package models
 // https://sqldalmaker.sourceforge.net/
 
 type Project struct {
-	PId   int64  `json:"p_id" gorm:"column:p_id;primaryKey;autoIncrement"`
+	PID   int64  `json:"p_id" gorm:"column:p_id;primaryKey;autoIncrement"`
 	PName string `json:"p_name" gorm:"column:p_name;not null"`
 }

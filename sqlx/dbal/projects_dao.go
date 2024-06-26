@@ -19,17 +19,17 @@ func (dao *ProjectsDao) CreateProject(ctx context.Context, item *dto.Project) er
 	sql := `insert into projects (p_name) values (?)`
 	row, err := dao.ds.Insert(ctx, sql, "p_id", item.PName)
 	if err == nil {
-		err = SetRes(&item.PId, row)
+		err = SetRes(&item.PID, row)
 	}
 	return err
 }
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pId int64) (*dto.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*dto.Project, error) {
 	sql := `select * from projects where p_id=?`
 	res := &dto.Project{}
-	err := dao.ds.Select(ctx, sql, res, pId)
+	err := dao.ds.Select(ctx, sql, res, pid)
 	if err == nil {
 		return res, nil
 	}
@@ -40,7 +40,7 @@ func (dao *ProjectsDao) ReadProject(ctx context.Context, pId int64) (*dto.Projec
 
 func (dao *ProjectsDao) UpdateProject(ctx context.Context, item *dto.Project) (rowsAffected int64, err error) {
 	sql := `update projects set p_name=? where p_id=?`
-	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PName, item.PId)
+	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PName, item.PID)
 	return
 }
 
@@ -48,7 +48,7 @@ func (dao *ProjectsDao) UpdateProject(ctx context.Context, item *dto.Project) (r
 
 func (dao *ProjectsDao) DeleteProject(ctx context.Context, item *dto.Project) (rowsAffected int64, err error) {
 	sql := `delete from projects where p_id=?`
-	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PId)
+	rowsAffected, err = dao.ds.Exec(ctx, sql, item.PID)
 	return
 }
 

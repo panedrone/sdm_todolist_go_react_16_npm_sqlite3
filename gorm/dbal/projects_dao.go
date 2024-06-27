@@ -28,9 +28,9 @@ func (dao *ProjectsDao) ReadProjectList(ctx context.Context) (res []*models.Proj
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*models.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pID int64) (*models.Project, error) {
 	res := &models.Project{}
-	err := dao.ds.Read(ctx, "projects", res, pid)
+	err := dao.ds.Read(ctx, "projects", res, pID)
 	if err == nil {
 		return res, nil
 	}

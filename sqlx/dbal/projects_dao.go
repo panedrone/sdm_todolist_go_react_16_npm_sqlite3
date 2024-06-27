@@ -26,10 +26,10 @@ func (dao *ProjectsDao) CreateProject(ctx context.Context, item *dto.Project) er
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*dto.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pID int64) (*dto.Project, error) {
 	sql := `select * from projects where p_id=?`
 	res := &dto.Project{}
-	err := dao.ds.Select(ctx, sql, res, pid)
+	err := dao.ds.Select(ctx, sql, res, pID)
 	if err == nil {
 		return res, nil
 	}

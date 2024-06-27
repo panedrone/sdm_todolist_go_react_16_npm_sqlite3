@@ -48,9 +48,9 @@ func (dao *TasksDao) ReadTaskList(ctx context.Context) (res []*dto.Task, err err
 
 // C(R)UD: tasks
 
-func (dao *TasksDao) ReadTask(ctx context.Context, tid int64) (*dto.Task, error) {
+func (dao *TasksDao) ReadTask(ctx context.Context, tID int64) (*dto.Task, error) {
 	sql := `select * from tasks where t_id=?`
-	row, err := dao.ds.QueryRow(ctx, sql, tid)
+	row, err := dao.ds.QueryRow(ctx, sql, tID)
 	if err != nil {
 		return nil, err
 	}

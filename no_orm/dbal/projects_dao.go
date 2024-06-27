@@ -26,9 +26,9 @@ func (dao *ProjectsDao) CreateProject(ctx context.Context, item *dto.Project) er
 
 // C(R)UD: projects
 
-func (dao *ProjectsDao) ReadProject(ctx context.Context, pid int64) (*dto.Project, error) {
+func (dao *ProjectsDao) ReadProject(ctx context.Context, pID int64) (*dto.Project, error) {
 	sql := `select * from projects where p_id=?`
-	row, err := dao.ds.QueryRow(ctx, sql, pid)
+	row, err := dao.ds.QueryRow(ctx, sql, pID)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (dao *ProjectsDao) ReadAll(ctx context.Context) (res []*dto.ProjectLi, err 
 		item := dto.ProjectLi{}
 		SetInt64(&item.PID, row, "p_id", errMap)
 		SetString(&item.PName, row, "p_name", errMap)
-		SetInt64(&item.PTasksCount, row, "p_tasks_count", errMap)
+		SetAny(&item.PTasksCount, row, "p_tasks_count", errMap)
 		res = append(res, &item)
 	}
 	err = dao.ds.QueryAllRows(ctx, sql, _onRow)

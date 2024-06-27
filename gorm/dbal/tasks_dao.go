@@ -28,9 +28,9 @@ func (dao *TasksDao) ReadTaskList(ctx context.Context) (res []*models.Task, err 
 
 // C(R)UD: tasks
 
-func (dao *TasksDao) ReadTask(ctx context.Context, tid int64) (*models.Task, error) {
+func (dao *TasksDao) ReadTask(ctx context.Context, tID int64) (*models.Task, error) {
 	res := &models.Task{}
-	err := dao.ds.Read(ctx, "tasks", res, tid)
+	err := dao.ds.Read(ctx, "tasks", res, tID)
 	if err == nil {
 		return res, nil
 	}

@@ -6,11 +6,14 @@ import {RawHtml} from "./raw_html"
 
 
 export function fetchWhoIAm() {
-    api.getText('api/whoiam', (res) => {
-        if (!res) {
-            res = '== unknown =='
+    api.getText('api/whoiam', (text) => {
+        if (!text) {
+            return
         }
-        res += ", react " + React.version
-        shared.render(<RawHtml rawHtml={res}/>, 'whoiam')
+        if (text.includes('sqlx')) {
+            text += ', <a target="_blank" href="swagger/index.html">swagger</a>'
+        }
+        text += ", npm, react " + React.version
+        shared.render(<RawHtml rawHtml={text}/>, 'whoiam')
     })
 }

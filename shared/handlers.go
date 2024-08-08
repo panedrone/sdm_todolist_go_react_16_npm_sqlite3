@@ -31,11 +31,11 @@ func AssignHandlers(
 
 	// === panedrone: type "http://localhost:8080" to render index.html
 
-	// myRouter.Static("/static", "./front-react/static")
-	// myRouter.StaticFile("/", "./front-react/index.html")
+	myRouter.Static("/static", "./front-react/static")
+	myRouter.StaticFile("/", "./front-react/index.html")
 
-	myRouter.Static("/static", "./front-vue/static")
-	myRouter.StaticFile("/", "./front-vue/index.html")
+	//myRouter.Static("/static", "./front-vue/static")
+	//myRouter.StaticFile("/", "./front-vue/index.html")
 
 	/////////////////////////////////////////
 

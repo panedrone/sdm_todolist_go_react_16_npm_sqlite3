@@ -1,2 +1,4 @@
-/front-end/node_modules/
-/front-end/package-lock.json
+/front-react/node_modules/
+/front-react/package-lock.json
+/front-vue/node_modules/
+/front-vue/package-lock.json

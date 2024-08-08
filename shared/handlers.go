@@ -29,18 +29,20 @@ func AssignHandlers(
 
 	//  https://hoohoo.top/blog/20210530112304-golang-tutorial-introduction-gin-html-template-and-how-integration-with-bootstrap/
 
-	myRouter.Static("/static", "./front-end/static")
-
 	// === panedrone: type "http://localhost:8080" to render index.html
 
-	myRouter.StaticFile("/", "./front-end/index.html")
+	// myRouter.Static("/static", "./front-react/static")
+	// myRouter.StaticFile("/", "./front-react/index.html")
+
+	myRouter.Static("/static", "./front-vue/static")
+	myRouter.StaticFile("/", "./front-vue/index.html")
 
 	/////////////////////////////////////////
 
 	groupApi := myRouter.Group("/api")
 
 	groupApi.GET("/whoiam", func(ctx *gin.Context) {
-		ctx.String(http.StatusOK, whoIam+", npm")
+		ctx.String(http.StatusOK, whoIam)
 	})
 
 	{

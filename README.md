@@ -4,7 +4,7 @@ A project demonstrating how to use [SQL DAL Maker](https://github.com/panedrone/
 [Part 2](./sqlx): using "github.com/jmoiron/sqlx"<br/>
 [Part 3](./no_orm): using "database/sql" directly
 
-Front-end is written in React.js.
+Front-end is written in both React 16 and Vue 2.7. Switch in [handlers.go](shared/handlers.go).
 
 ![sdm-todo-app.png](sdm-todo-app.png)
 

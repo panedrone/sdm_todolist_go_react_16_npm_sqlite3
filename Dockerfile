@@ -18,9 +18,9 @@ FROM ubuntu:24.04
 #FROM alpine
 COPY --from=builder /usr/local/src/main /apps/main
 #COPY db/todolist.sqlite /apps/todolist.sqlite
-#COPY front-end/static /apps/static
+#COPY front-react/static /apps/static
 #COPY ./dist /apps/dist
-#COPY front-end/index.html /apps/index.html
+#COPY front-react/index.html /apps/index.html
 #COPY app/docs	/apps/docs
 
 #VOLUME /apps/web/upload

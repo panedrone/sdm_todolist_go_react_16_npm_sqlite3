@@ -13,5 +13,5 @@ services:
     ports:
       - '3101:8080'
     volumes:
-      - ./front-end:/apps/front-end
+      - ./front-react:/apps/front-react
       - ./db:/apps/db

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="stylesheet" href="static/styles.css" type="text/css"/>
+    <title>Todo App</title>
+</head>
+
+<body>
+
+<div id="app" v-cloak>
+    <table class="bg">
+        <tr>
+            <td>
+                <div class="card">
+                    <h2>
+                        <whoiam></whoiam>
+                    </h2>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="red-banner">
+                    <server_error></server_error>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="bg" style="padding: 4px;">
+        <tr>
+            <td>
+                <div class="card">
+                    <projects></projects>
+                </div>
+            </td>
+            <td>
+                <div class="card">
+                    <project_details></project_details>
+                </div>
+            </td>
+            <td>
+                <div class="card">
+                    <task_details></task_details>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="static/dist/main.js"></script>
+
+</body>
